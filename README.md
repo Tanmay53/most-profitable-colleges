@@ -2,6 +2,8 @@
 
 A compilation of the most economical colleges in USA.
 
+![Page Screenshot](./public/img/graph-screenshot.png)
+
 ## Project Setup
 
 1. Clone the repository.
