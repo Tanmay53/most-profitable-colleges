@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Router from "next/router";
 import Header from "/components/Header/Header.js";
+import Footer from "/components/Footer/Footer.js";
 import HeaderLinks from "/components/Header/HeaderLinks.js";
 import Parallax from "/components/Parallax/Parallax.js";
 import GridContainer from "/components/Grid/GridContainer.js";
@@ -9,7 +10,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "/styles/jss/nextjs-material-kit/pages/components.js";
 import classNames from "classnames";
 import Graph from "../pages-sections/graphs/Graph";
-// import AverageSalaryGraph from "../pages-sections/graphs/AverageSalaryGraph";
 import profitabilities from "/data/filtered/profitabilities.json"
 
 const useStyles = makeStyles(styles);
@@ -108,6 +108,7 @@ export default function Index() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
