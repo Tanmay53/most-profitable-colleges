@@ -1,5 +1,7 @@
 # most-profitable-colleges
 
+A compilation of the most economical colleges in USA.
+
 ## Project Setup
 
 1. Clone the repository.
@@ -8,10 +10,10 @@
 
 ## Goals and Objectives:
 
-[x] Develop a script to retrieve university data from the Data USA API.
-[x] Calculate profitability scores for universities based on average salary and tuition fees.
-[x] Create a sorted list of universities based on profitability scores.
-[x] Present the results in an organized and user-friendly format.
+- [x] Develop a script to retrieve university data from the Data USA API.
+- [x] Calculate profitability scores for universities based on average salary and tuition fees.
+- [x] Create a sorted list of universities based on profitability scores.
+- [x] Present the results in an organized and user-friendly format.
 
 ## API Endpoints
 
