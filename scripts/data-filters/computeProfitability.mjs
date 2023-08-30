@@ -43,13 +43,15 @@ var profitabilities = feasibleYears.reduce( (accumulator, year) => {
 
             let ratio = average_wages / tuitionFeesData[year][university_id].state_tuition_fees
 
-            accumulator_1.push({
-                'university_id': university_id,
-                'university_name': tuitionFeesData[year][university_id].university_name,
-                'average_wages': average_wages,
-                'state_tuition_fees': tuitionFeesData[year][university_id].state_tuition_fees,
-                'ratio': ratio
-            })
+            if( average_wages != 0 ) {
+                accumulator_1.push({
+                    'university_id': university_id,
+                    'university_name': tuitionFeesData[year][university_id].university_name,
+                    'average_wages': average_wages,
+                    'state_tuition_fees': tuitionFeesData[year][university_id].state_tuition_fees,
+                    'ratio': ratio
+                })
+            }
         }
 
         return accumulator_1

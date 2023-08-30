@@ -1,6 +1,9 @@
 import { container } from "/styles/jss/nextjs-material-kit.js";
 
 const componentsStyle = {
+  sections: {
+    padding: "70px 0"
+  },
   container,
   brand: {
     color: "#FFFFFF",
@@ -37,6 +40,17 @@ const componentsStyle = {
   },
   textCenter: {
     textAlign: "center"
+  },
+  flexCenter: {
+    display: "flex",
+    justifyContent: "center" 
+  },
+  marginY: {
+    margin: "5rem 0"
+  },
+  w50: {
+    width: "48%",
+    padding: "1%"
   }
 };
 

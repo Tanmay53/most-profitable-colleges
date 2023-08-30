@@ -25,7 +25,11 @@ const basicsStyle = {
     height: "17px",
     color: "#FFFFFF"
   },
-  ...customCheckboxRadioSwitch
+  ...customCheckboxRadioSwitch,
+  flexCenter: {
+    display: "flex",
+    justifyContent: "center" 
+  }
 };
 
 export default basicsStyle;

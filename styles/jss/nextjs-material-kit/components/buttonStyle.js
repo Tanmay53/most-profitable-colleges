@@ -329,6 +329,12 @@ const buttonStyle = {
     lineHeight: "1.5",
     borderRadius: "0.2rem"
   },
+  xs: {
+    padding: "0.3rem 0.75rem",
+    fontSize: "0.55rem",
+    lineHeight: "1.25",
+    borderRadius: "0.2rem"
+  },
   round: {
     borderRadius: "30px"
   },
