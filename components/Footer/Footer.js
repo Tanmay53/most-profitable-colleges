@@ -37,7 +37,16 @@ export default function Footer(props) {
                 className={classes.block}
                 target="_blank"
               >
-                Licenses
+                License
+              </a>
+            </ListItem>
+            <ListItem className={classes.inlineBlock}>
+              <a
+                href="https://datausa.io"
+                className={classes.block}
+                target="_blank"
+              >
+                Data Source
               </a>
             </ListItem>
           </List>

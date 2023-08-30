@@ -3,3 +3,4 @@ calculate:
 
 start:
 	make calculate
+	npm run dev
