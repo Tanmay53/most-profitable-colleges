@@ -8,7 +8,7 @@ var averageWages = await getSimplifiedAverageWages()
 var majorCompletions = await getSimplifiedMajorCompletions()
 // mojorCompletions[year][university_id][degree_id] = Completions for the Degree
 
-var tuitionFees = await getSimplifiedTuitionFees()
+var tuitionFeesData = await getSimplifiedTuitionFeesData()
 // tuitionFees[year][university_id] = { state_tuition_fee, university_name }
 
 var feasibleYears = intersection(
@@ -16,13 +16,53 @@ var feasibleYears = intersection(
         Object.keys(averageWages),
         Object.keys(majorCompletions)
     ),
-    Object.keys(tuitionFees)
+    Object.keys(tuitionFeesData)
 )
 
-// profitabilities[year][university_id] = { university_name, average_wages, state_tuition_fee, ratio }
+// profitabilities[year] = { university_id, university_name, average_wages, state_tuition_fee, ratio }
+var profitabilities = feasibleYears.reduce( (accumulator, year) => {
+    accumulator[year] = Object.keys(tuitionFeesData[year]).reduce( (accumulator_1, university_id) => {
+        let universityCompletions = majorCompletions[year][university_id]
+
+        if( universityCompletions ) {
+            // Sum of Completions for every degree in the University
+            let totalCompletions = 0
+
+            // Sum of product of completions and average salary for every degree in the University
+            let totalSalaryCompletionProduct = 0
+
+            Object.keys(universityCompletions)
+                .forEach( degree_id => {
+                    if(averageWages[year][degree_id] && universityCompletions[degree_id] ) {
+                        totalCompletions += universityCompletions[degree_id]
+                        totalSalaryCompletionProduct += averageWages[year][degree_id] * universityCompletions[degree_id]
+                    }
+                })
+
+            let average_wages = totalCompletions == 0 ? 0 : totalSalaryCompletionProduct / totalCompletions
+
+            let ratio = average_wages / tuitionFeesData[year][university_id].state_tuition_fees
+
+            accumulator_1.push({
+                'university_id': university_id,
+                'university_name': tuitionFeesData[year][university_id].university_name,
+                'average_wages': average_wages,
+                'state_tuition_fees': tuitionFeesData[year][university_id].state_tuition_fees,
+                'ratio': ratio
+            })
+        }
+
+        return accumulator_1
+    }, [])
+    .sort( (a, b) => b.ratio - a.ratio )
+
+    return accumulator
+}, {})
+
+fs.writeFile("./data/filtered/profitabilities.json", JSON.stringify(profitabilities))
 
 async function getSimplifiedAverageWages() {
-    let AverageWages = JSON.parse(await fs.readFile("./data/datausa.io/AverageWageForEveryCIP2.json"));
+    let AverageWages = JSON.parse(await fs.readFile("./data/datausa/AverageWageForEveryCIP2.json"));
     let simplifiedWages = {}
 
     AverageWages.data.forEach( (wageRecord) => {
@@ -41,7 +81,7 @@ async function getSimplifiedAverageWages() {
 }
 
 async function getSimplifiedMajorCompletions() {
-    let MajorCompletions = JSON.parse(await fs.readFile("./data/datausa.io/MajorCompletionsForEveryCIP2inEveryUniversity.json"))
+    let MajorCompletions = JSON.parse(await fs.readFile("./data/datausa/MajorCompletionsForEveryCIP2inEveryUniversity.json"))
     let simplified = {}
 
     MajorCompletions.data.forEach( (record) => {
@@ -61,8 +101,8 @@ async function getSimplifiedMajorCompletions() {
     return simplified
 }
 
-async function getSimplifiedTuitionFees() {
-    let TuitonFees = JSON.parse(await fs.readFile("./data/datausa.io/StateTuitionFeesForEveryUniversity.json"))
+async function getSimplifiedTuitionFeesData() {
+    let TuitonFees = JSON.parse(await fs.readFile("./data/datausa/StateTuitionFeesForEveryUniversity.json"))
     let simplified = {}
 
     TuitonFees.data.forEach( record => {
@@ -74,7 +114,10 @@ async function getSimplifiedTuitionFees() {
             console.error(`New Average: ${record['State Tuition']}`)
         }
     
-        simplified[record['ID Year']][record['ID University']] = record['State Tuition']
+        simplified[record['ID Year']][record['ID University']] = {
+            state_tuition_fees: record['State Tuition'],
+            university_name: record['University']
+        }
     })
 
     return simplified;
