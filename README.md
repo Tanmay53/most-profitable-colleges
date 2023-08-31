@@ -2,7 +2,9 @@
 
 A compilation of the most economical colleges in USA.
 
-![Page Screenshot](./public/img/graph-screenshot.png)
+Deployment Link: https://most-profitable-colleges.vercel.app/
+
+![Page Screenshot](https://repository-images.githubusercontent.com/684706501/77a86c05-ecf8-40ae-931a-add9ff9f3465)
 
 ## Project Setup
 
